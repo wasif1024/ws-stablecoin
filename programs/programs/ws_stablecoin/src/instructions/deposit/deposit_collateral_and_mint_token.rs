@@ -1,12 +1,12 @@
 use crate::constants::{COLLATERAL_SEED, CONFIGURATION_SEED, SOL_SEED};
+use crate::instructions::deposit::util::{deposit_sol, mint_tokens};
 use crate::states::{Collatoral, Configuration};
 use anchor_lang::prelude::*;
 use anchor_spl::{
     associated_token::AssociatedToken,
-    token_interface::{Mint, Token2022, TokenAccount, TokenInterface},
+    token_interface::{Mint, Token2022, TokenAccount},
 };
 use pyth_solana_receiver_sdk::price_update::PriceUpdateV2;
-use crate::instructions::deposit::util::{deposit_sol,mint_tokens};
 #[derive(Accounts)]
 pub struct DepositCollateralAndMintToken<'info> {
     #[account(mut)]
@@ -43,8 +43,18 @@ pub fn process_deposit_collateral_and_mint_token(
         collator_account.bump_collateral_account = ctx.bumps.collateral_account;
         collator_account.bump_sol_account = ctx.bumps.sol_account;
     }
-    deposit_sol(&ctx.accounts.system_program,&ctx.accounts.depositor,&ctx.accounts.sol_account,amount_collateral)?;
-    mint_tokens(&ctx.accounts.token_program,ctx.accounts.config_account.bump_mint_account,
-        &ctx.accounts.mint_account,&ctx.accounts.token_account,amount_to_mint)?;
+    deposit_sol(
+        &ctx.accounts.system_program,
+        &ctx.accounts.depositor,
+        &ctx.accounts.sol_account,
+        amount_collateral,
+    )?;
+    mint_tokens(
+        &ctx.accounts.token_program,
+        ctx.accounts.config_account.bump_mint_account,
+        &ctx.accounts.mint_account,
+        &ctx.accounts.token_account,
+        amount_to_mint,
+    )?;
     Ok(())
 }

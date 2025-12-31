@@ -4,8 +4,7 @@ use crate::constants::{
 };
 use crate::states::Configuration;
 use anchor_lang::prelude::*;
-use anchor_spl::token;
-use anchor_spl::token_interface::{Mint, Token2022, TokenInterface};
+use anchor_spl::token_interface::{Mint, Token2022};
 #[derive(Accounts)]
 pub struct InitializeConfig<'info> {
     #[account(mut)]

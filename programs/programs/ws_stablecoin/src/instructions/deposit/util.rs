@@ -1,8 +1,8 @@
 use crate::constants::MINT_SEED;
 use anchor_lang::prelude::*;
-use anchor_spl::token_2022::{MintTo, mint_to};
-use anchor_spl::token_interface::{Mint, Token2022, TokenAccount, TokenInterface};
-use anchor_lang::system_program::{Transfer, transfer};
+use anchor_lang::system_program::{transfer, Transfer};
+use anchor_spl::token_2022::{mint_to, MintTo};
+use anchor_spl::token_interface::{Mint, Token2022, TokenAccount};
 pub fn mint_tokens<'info>(
     token_program: &Program<'info, Token2022>,
     bump: u8,
@@ -22,18 +22,24 @@ pub fn mint_tokens<'info>(
             signer_seeds,
         ),
         amount,
-    );
-    Ok(())
+    )
+    //Ok(())
 }
-pub fn deposit_sol<'info>(system_program:&Program<'info,System>,
-from:&Signer<'info>,to:&SystemAccount<'info>,amount:u64)->Result<()>{
+pub fn deposit_sol<'info>(
+    system_program: &Program<'info, System>,
+    from: &Signer<'info>,
+    to: &SystemAccount<'info>,
+    amount: u64,
+) -> Result<()> {
     transfer(
-    CpiContext::new(
-        system_program.to_account_info(),
-        Transfer{
-            from:from.to_account_info(),
-            to:to.to_account_info(),
-        },
-    ),amount);
-    Ok(())
+        CpiContext::new(
+            system_program.to_account_info(),
+            Transfer {
+                from: from.to_account_info(),
+                to: to.to_account_info(),
+            },
+        ),
+        amount,
+    )
+    //Ok(())
 }
