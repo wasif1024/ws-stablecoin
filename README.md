@@ -2,6 +2,10 @@
 
 A Solana-based stablecoin protocol built with Anchor framework that enables users to mint stablecoins by depositing SOL as collateral. This project implements a collateralized debt position (CDP) system with liquidation mechanisms to maintain protocol stability. The protocol uses Pyth Network oracle for real-time price feeds to ensure accurate collateral valuation and liquidation calculations.
 
+![WS Stablecoin Protocol Overview](assets/stablecoin.png)
+
+*Built with Anchor | SOL Collateral CDP | Oracle-Backed Stability*
+
 ## Features
 
 - **Deposit & Mint**: Deposit SOL collateral and mint stablecoins in a single transaction
